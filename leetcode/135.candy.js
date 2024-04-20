@@ -2,7 +2,7 @@
  * @param {number[]} ratings
  * @return {number}
  */
-var candy = function (ratings) {
+var candy2 = function (ratings) {
   let n = ratings.length
   let caddies = new Array(n).fill(0)
   let kidsWithCaddy = 0
@@ -47,3 +47,29 @@ var candy = function (ratings) {
   }
   return caddies.reduce((acc, cur) => acc + cur, 0)
 }
+
+
+/**
+ * @param {number[]} ratings
+ * @return {number}
+ */
+var candy = function (ratings) {
+  const n = ratings.length
+  let caddies = new Array(ratings.length)
+
+  for (let i = 0; i < n; i++) {
+    if (!(i == n - 1 || ratings[i] <= ratings[i + 1])) continue
+    if (i == 0 || ratings[i] <= ratings[i - 1])
+      caddies[i] = 1
+    if (i > 0 && ratings[i] > ratings[i - 1])
+      caddies[i] = caddies[i - 1] + 1
+  }
+  for (let i = n - 1; i >= 0; i--) {
+    if (i < n - 1 && ratings[i] > ratings[i + 1] && (i == 0 || ratings[i] <= ratings[i - 1]))
+      caddies[i] = caddies[i + 1] + 1
+    if (i > 0 && i < n - 1 && ratings[i] > ratings[i - 1] && ratings[i] > ratings[i + 1])
+      caddies[i] = Math.max(caddies[i - 1], caddies[i + 1]) + 1
+  }
+
+  return caddies.reduce((a, b) => a + b, 0)
+};
