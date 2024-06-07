@@ -10,19 +10,20 @@
  * @param {TreeNode} root
  * @return {number[]}
  */
-var averageOfLevels = function (root) {
+var rightSideView = function (root) {
   if (!root) return []
-  let queue = [root], row = [], result = [root.val]
+  let queue = [root], row = [], result = []
+
   while (queue.length > 0) {
     const cur = queue.shift()
-    if (cur.left != null) row.push(cur.left)
-    if (cur.right != null) row.push(cur.right)
+    if (cur.left) row.push(cur.left)
+    if (cur.right) row.push(cur.right)
 
     if (queue.length == 0) {
-      if (row.length) result.push(row.reduce((acc, cur) => acc + cur.val, 0) / row.length)
-      queue = row
+      result.push(cur.val)
+      queue.push(...row)
       row = []
     }
   }
   return result
-};
+}
