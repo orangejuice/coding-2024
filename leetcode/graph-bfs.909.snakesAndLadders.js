@@ -13,19 +13,21 @@ var snakesAndLadders = function (board) {
     return [x, y]
   }
 
-  let queue = [[1, 0]]
+  let queue = [[1, 0]], visited = Array(n * n).fill(false)
 
   while (queue.length) {
     const [cur, steps] = queue.shift()
 
-    console.log(cur, steps)
     if (cur == n * n) return steps
 
-    for (let i = 6; i >= 1 && cur + i <= n * n; i--) {
-      const [x, y] = coords(cur + i), next = board[x][y]
-      if (next == -1) queue.push([cur + i, steps + 1])
-      else if (next > cur) queue.push([next, steps + 1])      // wrong answer
-    }                                                         // ok we have to consider the scenario that next < cur
+    for (let i = 1; i <= 6 && cur + i <= n * n; i++) {
+      const [x, y] = coords(cur + i)
+      const next = board[x][y] == -1 ? cur + i : board[x][y]
+      if (!visited[next]) {
+        visited[next] = true
+        queue.push([next, steps + 1])
+      }
+    }
   }
   return -1
-}
+};
