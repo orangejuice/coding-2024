@@ -13,7 +13,7 @@ var snakesAndLadders = function (board) {
     return [x, y]
   }
 
-  let queue = [[1, 0]], visited = Array(n * n).fill(false)
+  let queue = [[1, 0]], visited = Array(n * n + 1).fill(false)
 
   while (queue.length) {
     const [cur, steps] = queue.shift()
@@ -30,4 +30,4 @@ var snakesAndLadders = function (board) {
     }
   }
   return -1
-};
+}
