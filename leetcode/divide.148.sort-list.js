@@ -10,35 +10,29 @@
  * @return {ListNode}
  */
 var sortList = function (head) {
-  if (!head || !head.next) return head
-
-  const getMid = () => {
-    let slow = head, fast = head.next
-    while (fast && fast.next) {
-      fast = fast.next.next
-      slow = slow.next
-    }
-    return slow
+  const quickSort = (start, end) => {
+    if (start == end) return start
+    const [head, pivot] = partition(start, end)
+    const left = quickSort(head, pivot)
+    pivot.next = quickSort(pivot.next, end)
+    return left
   }
+  return quickSort(head, null)
+}
 
-  const merge = (left, right) => {
-    const dummy = new ListNode()
-    let cur = dummy
-    while (left && right) {
-      if (left.val > right.val) {
-        cur.next = right
-        right = right.next
-      } else {
-        cur.next = left
-        left = left.next
-      }
-      cur = cur.next
+const partition = (start, end) => {
+  const dummy = new ListNode(), pivot = start
+  let last = start, cur = start.next, small = dummy
+  while (cur != end) {
+    if (cur.val < pivot.val) {
+      small.next = cur
+      small = small.next
+      last.next = cur.next
+    } else {
+      last = cur
     }
-    cur.next = left || right
-    return dummy.next
+    cur = cur.next
   }
-
-  const mid = getMid(head), right = mid.next
-  mid.next = null
-  return merge(sortList(head), sortList(right))
+  small.next = pivot
+  return [dummy.next, pivot]
 }
