@@ -4,9 +4,10 @@
  * @return {number}
  */
 var removeElement = function (nums, val) {
-  let validIdx = 0
-  for (let i = 0; i < nums.length; i++) {
-    if (nums[i] != val) nums[validIdx++] = nums[i]
+  let fast = 0, slow = 0
+  while (fast < nums.length) {
+    if (nums[fast] != val) nums[slow++] = nums[fast]
+    fast++
   }
-  return validIdx
-}
+  return slow
+};
