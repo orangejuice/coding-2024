@@ -3,13 +3,11 @@
  * @return {boolean}
  */
 var isHappy = function (n) {
-  let seen = new Set()
-  while (!seen.has(n)) {
-    seen.add(n)
-    let result = Array.from(n.toString(), Number).reduce((acc, cur) => acc + Math.pow(Number(cur), 2), 0)
-    if (result == 1) return true
-    else n = result
+  let visited = new Set(), cur = n
+  while (cur > 1) {
+    if (visited.has(cur)) return false
+    visited.add(cur)
+    cur = [...String(cur)].reduce((acc, dig) => acc + Math.pow(dig, 2), 0)
   }
-
-  return false
-}
+  return true
+};
