@@ -3,13 +3,14 @@
  * @return {boolean}
  */
 var isValid = function (s) {
-  const stack = []
+  let stack = []
   for (let ch of s) {
-    if ("([{".includes(ch)) stack.push(ch)
-    else if (ch == ")" && stack[stack.length - 1] == "("
-      || ch == "]" && stack[stack.length - 1] == "["
-      || ch == "}" && stack[stack.length - 1] == "{") stack.pop()
-    else return false
+    switch (ch) {
+      case '}': if (stack[stack.length - 1] == '{') stack.pop(); else return false; break;
+      case ']': if (stack[stack.length - 1] == '[') stack.pop(); else return false; break;
+      case ')': if (stack[stack.length - 1] == '(') stack.pop(); else return false; break;
+      default: stack.push(ch)
+    }
   }
   return stack.length == 0
-}
+};
