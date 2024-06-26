@@ -13,11 +13,7 @@
  */
 var lowestCommonAncestor = function (root, p, q) {
   if (!root || root == p || root == q) return root
-
-  const lcaLeft = lowestCommonAncestor(root.left, p, q)
-  const lcaRight = lowestCommonAncestor(root.right, p, q)
-
-  if (lcaLeft && lcaRight) return root
-  else if (lcaLeft) return lcaLeft
-  else if (lcaRight) return lcaRight
-}
+  const left = lowestCommonAncestor(root.left, p, q)
+  const right = lowestCommonAncestor(root.right, p, q)
+  return left && right ? root : left ? left : right
+};
